@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: ai-brag-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ai_brag_doc
+    ports:
+      - "5433:5432"
+    volumes:
+      - ai_brag_postgres_data:/var/lib/postgresql
+volumes:
+  ai_brag_postgres_data:

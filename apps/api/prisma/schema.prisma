@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  firstName   String
+  lastName    String
+  password    String   // hashed password
+  role        Role     @default(USER) // RBAC: USER / ADMIN
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  worklogs    WorkLog[]
+  weekly      WeeklySummary[]
+  monthly     MonthlyDoc[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model WorkLog {
+  id          String   @id @default(uuid())
+  userId      String
+  date        DateTime
+
+  frontend    String?
+  backend     String?
+  qa          String?
+  management  String?
+
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model WeeklySummary {
+  id        String   @id @default(uuid())
+  userId    String
+  weekStart DateTime
+  content   String
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model MonthlyDoc {
+  id        String   @id @default(uuid())
+  userId    String
+  month     String
+  content   String
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
