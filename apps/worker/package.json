@@ -1,0 +1,13 @@
+{
+  "name": "@brag/worker",
+  "version": "1.0.0",
+  "main": "src/queue/worker.js",
+  "scripts": {
+    "start": "ts-node src/queue/worker.ts",
+    "dev": "ts-node src/queue/worker.ts"
+  },
+  "dependencies": {
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.3.0"
+  }
+}
