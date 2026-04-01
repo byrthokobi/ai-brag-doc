@@ -1,6 +1,6 @@
 # AI Brag Document Generator
 
-The **AI Brag Document Generator** is a tool designed to help professionals track, generate, and summarize their work achievements and create polished "brag documents" using AI.
+The **AI Brag Document Generator** is a tool designed to help professionals track, generate, and summarize their work achievements and create polished "brag documents" using AI. The brag document is generated per week and per month basis.
 
 ## 🏗 Architecture & Monorepo Strategy
 
