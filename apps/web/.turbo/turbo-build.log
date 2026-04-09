@@ -5,32 +5,32 @@
 ⚠ Found lockfile missing swc dependencies, patching...
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_51_481Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_45_590Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_53_214Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_47_696Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_54_927Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_49_761Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_56_635Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_51_721Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_58_321Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_53_917Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_00_247Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_55_607Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_01_918Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_57_254Z-debug-0.log
 ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
 Error: Failed to get registry from "pnpm".
     at ignore-listed frames {
   [cause]: Error: Command failed: pnpm config get registry 
   npm error code ENOWORKSPACES
   npm error This command does not support workspaces.
-  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_14_51_481Z-debug-0.log
+  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_45_590Z-debug-0.log
   
       at ignore-listed frames {
     status: 1,
@@ -40,7 +40,7 @@ Error: Failed to get registry from "pnpm".
       <Buffer >,
       <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
     ],
-    pid: 33764,
+    pid: 47820,
     stdout: <Buffer >,
     stderr: <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
   }
@@ -51,25 +51,25 @@ Error: Failed to get registry from "pnpm".
 ⚠ Found lockfile missing swc dependencies, patching...
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_04_300Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_59_779Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_06_090Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_02_059Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_07_832Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_04_008Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_09_752Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_05_750Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_11_436Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_07_697Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_13_127Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_09_452Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_14_835Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_11_184Z-debug-0.log
 ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
 Error: Failed to get registry from "pnpm".
     at getRegistry (C:\BS Task\ai-brag-doc\node_modules\next\dist\lib\helpers\get-registry.js:34:37)
@@ -79,7 +79,7 @@ Error: Failed to get registry from "pnpm".
   [cause]: Error: Command failed: pnpm config get registry 
   npm error code ENOWORKSPACES
   npm error This command does not support workspaces.
-  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_04_300Z-debug-0.log
+  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_30_59_779Z-debug-0.log
   
       at genericNodeError (node:internal/errors:983:15)
       at wrappedFn (node:internal/errors:537:14)
@@ -97,63 +97,63 @@ Error: Failed to get registry from "pnpm".
       <Buffer >,
       <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
     ],
-    pid: 25028,
+    pid: 3116,
     stdout: <Buffer >,
     stderr: <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
   }
 }
-✓ Compiled successfully in 15.3s
+✓ Compiled successfully in 17.1s
   Running TypeScript ...
-  Finished TypeScript in 3.8s ...
+  Finished TypeScript in 4.1s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/4) ...
 ⚠ Found lockfile missing swc dependencies, patching...
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_25_088Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_22_725Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_26_867Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_24_423Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_28_660Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_26_066Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_30_784Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_27_732Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_32_577Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_29_364Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_34_410Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_31_024Z-debug-0.log
 npm error code ENOWORKSPACES
 npm error This command does not support workspaces.
-npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_36_133Z-debug-0.log
+npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_33_108Z-debug-0.log
 ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
 Error: Failed to get registry from "pnpm".
     at ignore-listed frames {
   [cause]: Error: Command failed: pnpm config get registry 
   npm error code ENOWORKSPACES
   npm error This command does not support workspaces.
-  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-03-31T11_15_25_088Z-debug-0.log
-  Generating static pages using 5 workers (1/4) 
+  npm error A complete log of this run can be found in: C:\Users\BS01650\npm-cache\_logs\2026-04-06T12_31_22_725Z-debug-0.log
   
       at ignore-listed frames {
     status: 1,
     signal: null,
     output: [
+  Generating static pages using 5 workers (1/4) 
       null,
       <Buffer >,
       <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
     ],
-    pid: 45528,
+    pid: 20556,
     stdout: <Buffer >,
     stderr: <Buffer 6e 70 6d 20 65 72 72 6f 72 20 63 6f 64 65 20 45 4e 4f 57 4f 52 4b 53 50 41 43 45 53 0a 6e 70 6d 20 65 72 72 6f 72 20 54 68 69 73 20 63 6f 6d 6d 61 6e ... 155 more bytes>
   }
 }
   Generating static pages using 5 workers (2/4) 
   Generating static pages using 5 workers (3/4) 
-✓ Generating static pages using 5 workers (4/4) in 13.8s
+✓ Generating static pages using 5 workers (4/4) in 13.2s
   Finalizing page optimization ...
 
 Route (app)
@@ -163,8 +163,3 @@ Route (app)
 
 ○  (Static)  prerendered as static content
 
-npm notice
-npm notice New minor version of npm available! 11.6.1 -> 11.12.1
-npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
-npm notice To update run: npm install -g npm@11.12.1
-npm notice

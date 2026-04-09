@@ -12,23 +12,12 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
-		"test": "turbo run test",
-		"prepare": "husky"
+		"test": "turbo run test"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.10",
-		"@commitlint/cli": "^20.5.0",
-		"@commitlint/config-conventional": "^20.5.0",
 		"dotenv": "^16.0.0",
-		"husky": "^9.1.7",
-		"lint-staged": "^16.4.0",
 		"ts-node": "^10.9.0",
 		"turbo": "latest",
 		"typescript": "^5.0.0"
-	},
-	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-			"biome check --write --no-errors-on-unmatched"
-		]
 	}
 }
