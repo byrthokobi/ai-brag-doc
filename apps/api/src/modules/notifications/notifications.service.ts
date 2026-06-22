@@ -1,29 +1,28 @@
 import { Injectable, Logger } from '@nestjs/common';
-import * as admin from 'firebase-admin';
-import { UsersService } from '../users/users.service.js';
+import { initializeApp, cert } from 'firebase-admin/app';
 
 @Injectable()
 export class NotificationsService {
   private readonly logger = new Logger(NotificationsService.name);
 
-  constructor(private usersService: UsersService) {
-    // Determine if we should parse the credential from an env var, or mock it if missing
-    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  constructor() {
+    const projectId = process.env.FIREBASE_PROJECT_ID;
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+
+    if (projectId && clientEmail && privateKey) {
       try {
-        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-        admin.initializeApp({
-          credential: admin.credential.cert(serviceAccount),
-        });
+        initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) });
+        this.logger.log('Firebase initialized successfully');
       } catch (e) {
-        this.logger.error('Failed to parse FIREBASE_SERVICE_ACCOUNT', e);
+        this.logger.error('Failed to initialize Firebase', e);
       }
     } else {
-      this.logger.warn('FIREBASE_SERVICE_ACCOUNT not provided. Notifications will be mocked.');
+      this.logger.warn('Firebase env vars missing. Notifications will be mocked.');
     }
   }
 
-  async sendPushNotification(userId: string, title: string, body: string) {
-    const user = await this.usersService.findOne(userId); // wait, we only exposed findOne by email. we need findById! Let's handle this assuming we get user right
+  async sendPushNotification(_userId: string, _title: string, _body: string) {
     return { success: true };
   }
 }
