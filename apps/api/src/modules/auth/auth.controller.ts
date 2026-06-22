@@ -1,28 +1,30 @@
-import { Controller, Post, Body, UnauthorizedException, Get, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
+import { RegisterDto } from './dto/register.dto.js';
+import { LoginDto } from './dto/login.dto.js';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
+import type { JwtUser } from '../../common/decorators/current-user.decorator.js';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('login')
-  async login(@Body() req: any) {
-    const user = await this.authService.validateUser(req.email, req.password);
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-    return this.authService.login(user);
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  register(@Body() dto: RegisterDto) {
+    return this.authService.register(dto);
   }
 
-  @Post('register')
-  async register(@Body() req: any) {
-    return this.authService.register(req);
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto.email, dto.password);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req: any) {
-    return req.user;
+  getProfile(@CurrentUser() user: JwtUser) {
+    return this.authService.getProfile(user.userId);
   }
 }
