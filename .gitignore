@@ -46,3 +46,11 @@ docker_logs.txt
 *.njsproj
 *.sln
 *.sw?
+
+# memory-bank
+memory-bank
+
+# specsmd
+.agent
+.claude
+.specsmd
