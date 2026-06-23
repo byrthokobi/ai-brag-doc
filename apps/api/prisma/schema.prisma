@@ -61,6 +61,8 @@ model WeeklySummary {
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, weekStart])
 }
 
 model MonthlyDoc {
@@ -72,4 +74,6 @@ model MonthlyDoc {
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, month])
 }

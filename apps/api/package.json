@@ -28,6 +28,7 @@
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "bcrypt": "^6.0.0",
+    "bullmq": "^5.79.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "firebase-admin": "^13.7.0",
@@ -65,7 +66,16 @@
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": ["ts-jest", { "tsconfig": { "module": "CommonJS", "moduleResolution": "node", "resolvePackageJsonExports": false } }]
+      "^.+\\.(t|j)s$": [
+        "ts-jest",
+        {
+          "tsconfig": {
+            "module": "CommonJS",
+            "moduleResolution": "node",
+            "resolvePackageJsonExports": false
+          }
+        }
+      ]
     },
     "moduleNameMapper": {
       ".*/generated/prisma/client(\\.js)?$": "<rootDir>/__mocks__/prisma-client-mock",
