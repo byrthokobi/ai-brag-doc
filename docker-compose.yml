@@ -11,5 +11,12 @@ services:
       - "5433:5432"
     volumes:
       - ai_brag_postgres_data:/var/lib/postgresql
+  redis:
+    image: redis:7-alpine
+    container_name: ai-brag-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
 volumes:
   ai_brag_postgres_data:
