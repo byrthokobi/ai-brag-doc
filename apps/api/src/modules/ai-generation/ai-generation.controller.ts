@@ -29,4 +29,22 @@ export class AiGenerationController {
   ): Promise<GenerationResponseDto> {
     return this.aiGenerationService.queueMonthlyDoc(user.userId, dto);
   }
+
+  @Post('weekly/regenerate')
+  @HttpCode(202)
+  async regenerateWeekly(
+    @CurrentUser() user: JwtUser,
+    @Body() dto: TriggerWeeklyDto,
+  ): Promise<GenerationResponseDto> {
+    return this.aiGenerationService.regenerateWeekly(user.userId, dto);
+  }
+
+  @Post('monthly/regenerate')
+  @HttpCode(202)
+  async regenerateMonthly(
+    @CurrentUser() user: JwtUser,
+    @Body() dto: TriggerMonthlyDto,
+  ): Promise<GenerationResponseDto> {
+    return this.aiGenerationService.regenerateMonthly(user.userId, dto);
+  }
 }
