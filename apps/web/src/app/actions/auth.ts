@@ -17,12 +17,12 @@ export async function login(_: unknown, formData: FormData): Promise<{ error?: s
   const password = formData.get('password') as string;
 
   try {
-    const data = await apiFetch<{ access_token: string }>('/auth/login', {
+    const data = await apiFetch<{ accessToken: string }>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
     const cookieStore = await cookies();
-    cookieStore.set(COOKIE_NAME, data.access_token, COOKIE_OPTS);
+    cookieStore.set(COOKIE_NAME, data.accessToken, COOKIE_OPTS);
   } catch (err: unknown) {
     return { error: err instanceof Error ? err.message : 'Login failed' };
   }
@@ -37,12 +37,17 @@ export async function register(_: unknown, formData: FormData): Promise<{ error?
   const lastName = formData.get('lastName') as string;
 
   try {
-    const data = await apiFetch<{ access_token: string }>('/auth/register', {
+    await apiFetch('/auth/register', {
       method: 'POST',
       body: JSON.stringify({ email, password, firstName, lastName }),
     });
+    // register returns user data, not a token — login immediately after
+    const loginData = await apiFetch<{ accessToken: string }>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
     const cookieStore = await cookies();
-    cookieStore.set(COOKIE_NAME, data.access_token, COOKIE_OPTS);
+    cookieStore.set(COOKIE_NAME, loginData.accessToken, COOKIE_OPTS);
   } catch (err: unknown) {
     return { error: err instanceof Error ? err.message : 'Registration failed' };
   }
