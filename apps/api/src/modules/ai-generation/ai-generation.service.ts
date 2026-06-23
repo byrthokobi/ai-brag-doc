@@ -1,5 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Queue } from 'bullmq';
+import { PrismaService } from '../prisma/prisma.service.js';
 import { TriggerWeeklyDto } from './dto/trigger-weekly.dto.js';
 import { TriggerMonthlyDto } from './dto/trigger-monthly.dto.js';
 import { GenerationResponseDto } from './dto/generation-response.dto.js';
@@ -9,7 +10,7 @@ export class AiGenerationService {
   private readonly logger = new Logger(AiGenerationService.name);
   private readonly queue: Queue;
 
-  constructor() {
+  constructor(private readonly prisma: PrismaService) {
     this.queue = new Queue('ai-jobs', {
       connection: {
         host: process.env.REDIS_HOST ?? '127.0.0.1',
@@ -35,6 +36,37 @@ export class AiGenerationService {
       { attempts: 3, backoff: { type: 'exponential', delay: 5000 } },
     );
     this.logger.log(`Queued monthly-doc for user ${userId}, month ${dto.month} → job ${job.id}`);
+    return { jobId: job.id! };
+  }
+
+  async regenerateWeekly(userId: string, dto: TriggerWeeklyDto): Promise<GenerationResponseDto> {
+    const weekStartDate = new Date(`${dto.weekStart}T00:00:00.000Z`);
+    const existing = await this.prisma.weeklySummary.findUnique({
+      where: { userId_weekStart: { userId, weekStart: weekStartDate } },
+    });
+    if (!existing) throw new NotFoundException(`No weekly summary found for week ${dto.weekStart}`);
+
+    const job = await this.queue.add(
+      'weekly-summary',
+      { userId, weekStart: dto.weekStart },
+      { attempts: 3, backoff: { type: 'exponential', delay: 5000 } },
+    );
+    this.logger.log(`Re-queued weekly-summary for user ${userId}, week ${dto.weekStart} → job ${job.id}`);
+    return { jobId: job.id! };
+  }
+
+  async regenerateMonthly(userId: string, dto: TriggerMonthlyDto): Promise<GenerationResponseDto> {
+    const existing = await this.prisma.monthlyDoc.findUnique({
+      where: { userId_month: { userId, month: dto.month } },
+    });
+    if (!existing) throw new NotFoundException(`No monthly doc found for month ${dto.month}`);
+
+    const job = await this.queue.add(
+      'monthly-doc',
+      { userId, month: dto.month },
+      { attempts: 3, backoff: { type: 'exponential', delay: 5000 } },
+    );
+    this.logger.log(`Re-queued monthly-doc for user ${userId}, month ${dto.month} → job ${job.id}`);
     return { jobId: job.id! };
   }
 }

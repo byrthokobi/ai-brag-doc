@@ -4,6 +4,7 @@ import Redis from 'ioredis';
 import { processWeeklySummary } from '../processors/weekly-summary.processor';
 import { processMonthlyDoc } from '../processors/monthly-doc.processor';
 import { startCronJobs } from '../cron/cron';
+import { handleGenerationFailure } from '../notifications/failure-notification';
 
 const connection = new Redis({
   host: process.env.REDIS_HOST ?? '127.0.0.1',
@@ -25,7 +26,13 @@ const worker = new Worker(
 );
 
 worker.on('completed', (job) => console.log(`[worker] Job ${job.id} (${job.name}) completed`));
-worker.on('failed', (job, err) => console.error(`[worker] Job ${job?.id} (${job?.name}) failed:`, err.message));
+worker.on('failed', (job, err) => {
+  if (job && job.attemptsMade >= (job.opts.attempts ?? 3)) {
+    handleGenerationFailure(job, err).catch(console.error);
+  } else {
+    console.warn(`[worker] Job ${job?.id} (${job?.name}) failed (attempt ${job?.attemptsMade}), retrying…`);
+  }
+});
 
 startCronJobs();
 console.log('[worker] Worker running and listening on ai-jobs queue');
