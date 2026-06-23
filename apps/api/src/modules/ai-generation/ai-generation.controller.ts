@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { AiGenerationService } from './ai-generation.service.js';
 import { TriggerWeeklyDto } from './dto/trigger-weekly.dto.js';
 import { TriggerMonthlyDto } from './dto/trigger-monthly.dto.js';
@@ -46,5 +46,15 @@ export class AiGenerationController {
     @Body() dto: TriggerMonthlyDto,
   ): Promise<GenerationResponseDto> {
     return this.aiGenerationService.regenerateMonthly(user.userId, dto);
+  }
+
+  @Get('weekly')
+  async listWeeklySummaries(@CurrentUser() user: JwtUser) {
+    return this.aiGenerationService.listWeeklySummaries(user.userId);
+  }
+
+  @Get('monthly')
+  async listMonthlyDocs(@CurrentUser() user: JwtUser) {
+    return this.aiGenerationService.listMonthlyDocs(user.userId);
   }
 }

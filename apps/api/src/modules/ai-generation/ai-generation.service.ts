@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { TriggerWeeklyDto } from './dto/trigger-weekly.dto.js';
 import { TriggerMonthlyDto } from './dto/trigger-monthly.dto.js';
 import { GenerationResponseDto } from './dto/generation-response.dto.js';
+import type { WeeklySummary, MonthlyDoc } from '../../generated/prisma/client.js';
 
 @Injectable()
 export class AiGenerationService {
@@ -68,5 +69,19 @@ export class AiGenerationService {
     );
     this.logger.log(`Re-queued monthly-doc for user ${userId}, month ${dto.month} → job ${job.id}`);
     return { jobId: job.id! };
+  }
+
+  async listWeeklySummaries(userId: string): Promise<WeeklySummary[]> {
+    return this.prisma.weeklySummary.findMany({
+      where: { userId },
+      orderBy: { weekStart: 'desc' },
+    });
+  }
+
+  async listMonthlyDocs(userId: string): Promise<MonthlyDoc[]> {
+    return this.prisma.monthlyDoc.findMany({
+      where: { userId },
+      orderBy: { month: 'desc' },
+    });
   }
 }

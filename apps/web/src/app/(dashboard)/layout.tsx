@@ -17,6 +17,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Link href="/logs" className="text-sm text-zinc-600 hover:text-zinc-900">
               History
             </Link>
+            <Link href="/summaries/weekly" className="text-sm text-zinc-600 hover:text-zinc-900">
+              Weekly
+            </Link>
+            <Link href="/summaries/monthly" className="text-sm text-zinc-600 hover:text-zinc-900">
+              Monthly
+            </Link>
             <form action={logout}>
               <Button type="submit" variant="ghost" size="sm">
                 Sign out
