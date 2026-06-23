@@ -1,7 +1,7 @@
 import { Job } from 'bullmq';
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getMessaging } from 'firebase-admin/messaging';
 import { prisma } from '../prisma/prisma-client';
+import { sendNotification } from './send-notification';
 
 function initFirebase(): void {
   if (getApps().length > 0) return;
@@ -38,16 +38,12 @@ export async function handleGenerationFailure(job: Job, err: Error): Promise<voi
       return;
     }
 
-    if (getApps().length === 0) return;
-
-    await getMessaging().sendEachForMulticast({
-      tokens: user.fcmTokens,
-      notification: {
-        title: 'Generation failed',
-        body: `Your ${docType} for ${period} could not be generated. Please try again.`,
-      },
-      data: { jobType: job.name, period },
-    });
+    await sendNotification(
+      user.fcmTokens,
+      'Generation failed',
+      `Your ${docType} for ${period} could not be generated. Please try again.`,
+      { jobType: job.name, period },
+    );
 
     console.log(`[notifications] Failure FCM sent to user ${userId} (${user.fcmTokens.length} token(s))`);
   } catch (notifyErr) {

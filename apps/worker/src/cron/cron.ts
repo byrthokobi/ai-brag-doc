@@ -2,6 +2,7 @@ import cron from 'node-cron';
 import { Queue } from 'bullmq';
 import Redis from 'ioredis';
 import { prisma } from '../prisma/prisma-client.js';
+import { checkAndRemindAll } from './daily-reminder';
 
 const connection = new Redis({
   host: process.env.REDIS_HOST ?? '127.0.0.1',
@@ -63,5 +64,10 @@ export function startCronJobs(): void {
     queueAllUsersMonthly().catch(err => console.error('[cron/monthly] Error:', err));
   }, { timezone: 'UTC' });
 
-  console.log('[cron] Scheduled: weekly (Mon 08:00 UTC), monthly (1st 08:00 UTC)');
+  // Daily at 18:00 UTC
+  cron.schedule('0 18 * * *', () => {
+    checkAndRemindAll().catch(err => console.error('[cron/reminder] Error:', err));
+  }, { timezone: 'UTC' });
+
+  console.log('[cron] Scheduled: weekly (Mon 08:00 UTC), monthly (1st 08:00 UTC), daily reminder (18:00 UTC)');
 }

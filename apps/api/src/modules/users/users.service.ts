@@ -37,10 +37,16 @@ export class UsersService {
     }
   }
 
-  async addFcmToken(userId: string, token: string): Promise<User> {
-    return this.prisma.user.update({
-      where: { id: userId },
-      data: { fcmTokens: { push: token } },
-    });
+  async addFcmToken(userId: string, token: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId }, select: { fcmTokens: true } });
+    if (!user || user.fcmTokens.includes(token)) return;
+    await this.prisma.user.update({ where: { id: userId }, data: { fcmTokens: { push: token } } });
+  }
+
+  async removeFcmTokens(userId: string, tokens: string[]): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId }, select: { fcmTokens: true } });
+    if (!user) return;
+    const filtered = user.fcmTokens.filter(t => !tokens.includes(t));
+    await this.prisma.user.update({ where: { id: userId }, data: { fcmTokens: { set: filtered } } });
   }
 }
