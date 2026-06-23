@@ -1,19 +1,22 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, HttpCode } from '@nestjs/common';
 import { NotificationsService } from './notifications.service.js';
-import { UsersService } from '../users/users.service.js';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
+import type { JwtUser } from '../../common/decorators/current-user.decorator.js';
+import { RegisterTokenDto } from './dto/register-token.dto.js';
 
 @Controller('notifications')
+@UseGuards(JwtAuthGuard)
 export class NotificationsController {
-  constructor(
-    private readonly notificationsService: NotificationsService,
-    private readonly usersService: UsersService
-  ) {}
+  constructor(private readonly notificationsService: NotificationsService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Post('register-token')
-  async registerToken(@Request() req: any, @Body() body: { token: string }) {
-    await this.usersService.addFcmToken(req.user.userId, body.token);
+  @Post('token')
+  @HttpCode(200)
+  async registerToken(
+    @CurrentUser() user: JwtUser,
+    @Body() dto: RegisterTokenDto,
+  ): Promise<{ success: boolean }> {
+    await this.notificationsService.registerToken(user.userId, dto.token);
     return { success: true };
   }
 }

@@ -93,17 +93,26 @@ describe('UsersService', () => {
   });
 
   describe('addFcmToken', () => {
-    it('calls prisma.update with fcmTokens push operation', async () => {
-      const updated = makeUser({ fcmTokens: ['token-abc'] });
-      prisma.user.update.mockResolvedValue(updated);
+    it('pushes token when not already present', async () => {
+      const existing = makeUser({ fcmTokens: [] });
+      prisma.user.findUnique.mockResolvedValue(existing);
+      prisma.user.update.mockResolvedValue(undefined);
 
-      const result = await service.addFcmToken('uuid-1', 'token-abc');
+      await service.addFcmToken('uuid-1', 'token-abc');
 
       expect(prisma.user.update).toHaveBeenCalledWith({
         where: { id: 'uuid-1' },
         data: { fcmTokens: { push: 'token-abc' } },
       });
-      expect(result.fcmTokens).toContain('token-abc');
+    });
+
+    it('skips update when token already present (idempotent)', async () => {
+      const existing = makeUser({ fcmTokens: ['token-abc'] });
+      prisma.user.findUnique.mockResolvedValue(existing);
+
+      await service.addFcmToken('uuid-1', 'token-abc');
+
+      expect(prisma.user.update).not.toHaveBeenCalled();
     });
   });
 });
