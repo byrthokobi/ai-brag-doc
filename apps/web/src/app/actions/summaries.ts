@@ -3,35 +3,9 @@
 import { cookies } from 'next/headers';
 import { apiFetch } from '@/lib/api';
 
-export type WeeklySummary = {
-  id: string;
-  weekStart: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type MonthlyDoc = {
-  id: string;
-  month: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 async function getToken(): Promise<string> {
   const cookieStore = await cookies();
   return cookieStore.get('token')?.value ?? '';
-}
-
-export async function fetchWeeklySummaries(): Promise<WeeklySummary[]> {
-  const token = await getToken();
-  return apiFetch<WeeklySummary[]>('/generation/weekly', { token });
-}
-
-export async function fetchMonthlyDocs(): Promise<MonthlyDoc[]> {
-  const token = await getToken();
-  return apiFetch<MonthlyDoc[]>('/generation/monthly', { token });
 }
 
 export async function triggerWeekly(): Promise<{ jobId?: string; error?: string }> {

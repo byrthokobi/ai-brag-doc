@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { StreakCard } from '@/components/streak-card';
-import { fetchWorklogs, fetchTodayWorklog } from '@/app/actions/worklogs';
-import { fetchWeeklySummaries, fetchMonthlyDocs } from '@/app/actions/summaries';
+import { fetchWorklogs, fetchTodayWorklog, fetchWeeklySummaries, fetchMonthlyDocs } from '@/lib/server-data';
 
 export default async function DashboardPage() {
   const today = new Date().toISOString().slice(0, 10);

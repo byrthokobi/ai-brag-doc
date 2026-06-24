@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { logout } from '@/app/actions/auth';
 import { Button } from '@/components/ui/button';
+import { NotificationInitializer } from '@/components/notification-initializer';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,6 +32,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </nav>
         </div>
       </header>
+      <NotificationInitializer />
       <main className="mx-auto max-w-4xl px-6 py-8">{children}</main>
     </div>
   );
