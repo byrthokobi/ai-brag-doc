@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { fetchWorklogs } from '@/app/actions/worklogs';
+import { fetchWorklogs } from '@/lib/server-data';
 import { Button } from '@/components/ui/button';
 import { LogFilters } from './log-filters';
 

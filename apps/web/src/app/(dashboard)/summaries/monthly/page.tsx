@@ -1,4 +1,5 @@
-import { fetchMonthlyDocs, triggerMonthly, regenerateMonthly } from '@/app/actions/summaries';
+import { fetchMonthlyDocs } from '@/lib/server-data';
+import { triggerMonthly, regenerateMonthly } from '@/app/actions/summaries';
 import { RegenerateButton } from '@/components/regenerate-button';
 import { CopyButton } from '@/components/copy-button';
 
@@ -39,7 +40,7 @@ export default async function MonthlyDocsPage() {
                 <div className="flex items-center gap-2">
                   <CopyButton text={doc.content} />
                   <RegenerateButton
-                    action={() => regenerateMonthly(doc.month)}
+                    action={regenerateMonthly.bind(null, doc.month)}
                     label="Regenerate"
                   />
                 </div>

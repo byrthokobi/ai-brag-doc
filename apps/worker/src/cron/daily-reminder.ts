@@ -1,13 +1,14 @@
 import { prisma } from '../prisma/prisma-client';
-import { sendNotification } from '../notifications/send-notification';
+import { sendEmail } from '../email/mailer';
+import { dailyReminderTemplate } from '../email/templates';
 
 export async function checkAndRemindAll(): Promise<void> {
   const todayUTC = new Date().toISOString().slice(0, 10);
   const todayDate = new Date(`${todayUTC}T00:00:00.000Z`);
 
   const users = await prisma.user.findMany({
-    where: { isActive: true, fcmTokens: { isEmpty: false } },
-    select: { id: true, fcmTokens: true },
+    where: { isActive: true },
+    select: { id: true, email: true },
   });
 
   console.log(`[cron/reminder] Checking ${users.length} users for ${todayUTC}`);
@@ -21,27 +22,19 @@ export async function checkAndRemindAll(): Promise<void> {
 
       if (logged) return;
 
-      const invalidTokens = await sendNotification(
-        user.fcmTokens,
-        'Time to log your work! 📝',
-        "Don't forget to capture what you worked on today.",
-        { type: 'daily-reminder', date: todayUTC },
-      );
+      await sendEmail({
+        to: user.email,
+        subject: "Don't forget to log your work today",
+        html: dailyReminderTemplate(todayUTC),
+      });
 
-      if (invalidTokens.length) {
-        const filtered = user.fcmTokens.filter(t => !invalidTokens.includes(t));
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { fcmTokens: { set: filtered } },
-        });
-        console.warn(`[cron/reminder] Removed ${invalidTokens.length} stale token(s) for user ${user.id}`);
-      }
+      console.log(`[cron/reminder] Reminder sent to ${user.email}`);
     }),
   );
 
   const failed = results.filter(r => r.status === 'rejected');
   if (failed.length) {
-    failed.forEach(r => console.error('[cron/reminder] User error:', (r as PromiseRejectedResult).reason));
+    failed.forEach(r => console.error('[cron/reminder] Error:', (r as PromiseRejectedResult).reason));
   }
 
   console.log(`[cron/reminder] Done — ${results.length - failed.length}/${results.length} users processed`);

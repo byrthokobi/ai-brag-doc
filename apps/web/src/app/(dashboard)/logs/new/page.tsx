@@ -1,4 +1,4 @@
-import { fetchTodayWorklog } from '@/app/actions/worklogs';
+import { fetchTodayWorklog } from '@/lib/server-data';
 import { LogEntryForm } from './log-entry-form';
 
 export default async function NewLogPage() {

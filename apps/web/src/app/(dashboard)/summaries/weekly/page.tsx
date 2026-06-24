@@ -1,4 +1,5 @@
-import { fetchWeeklySummaries, triggerWeekly, regenerateWeekly } from '@/app/actions/summaries';
+import { fetchWeeklySummaries } from '@/lib/server-data';
+import { triggerWeekly, regenerateWeekly } from '@/app/actions/summaries';
 import { RegenerateButton } from '@/components/regenerate-button';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -44,7 +45,7 @@ export default async function WeeklySummariesPage() {
                   Week of {weekLabel(summary.weekStart)}
                 </h2>
                 <RegenerateButton
-                  action={() => regenerateWeekly(summary.weekStart.slice(0, 10))}
+                  action={regenerateWeekly.bind(null, summary.weekStart.slice(0, 10))}
                   label="Regenerate"
                 />
               </div>
