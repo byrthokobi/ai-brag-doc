@@ -64,10 +64,10 @@ export function startCronJobs(): void {
     queueAllUsersMonthly().catch(err => console.error('[cron/monthly] Error:', err));
   }, { timezone: 'UTC' });
 
-  // Daily at 18:00 UTC
-  cron.schedule('0 18 * * *', () => {
+  // Daily at 12:00 UTC (18:00 Bangladesh, UTC+6)
+  cron.schedule('0 12 * * *', () => {
     checkAndRemindAll().catch(err => console.error('[cron/reminder] Error:', err));
   }, { timezone: 'UTC' });
 
-  console.log('[cron] Scheduled: weekly (Mon 08:00 UTC), monthly (1st 08:00 UTC), daily reminder (18:00 UTC)');
+  console.log('[cron] Scheduled: weekly (Mon 08:00 UTC), monthly (1st 08:00 UTC), daily reminder (12:00 UTC / 18:00 BDT)');
 }
