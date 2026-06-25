@@ -23,6 +23,7 @@ export type WeeklySummary = {
   weekStart: string;
   content: string;
   createdAt: string;
+  updatedAt?: string;
 };
 
 export type MonthlyDoc = {
@@ -30,6 +31,7 @@ export type MonthlyDoc = {
   month: string;
   content: string;
   createdAt: string;
+  updatedAt?: string;
 };
 
 async function getToken(): Promise<string> {
