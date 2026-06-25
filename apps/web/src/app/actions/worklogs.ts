@@ -19,19 +19,19 @@ export async function upsertWorklog(
   const backend = formData.get('backend') as string;
   const qa = formData.get('qa') as string;
   const management = formData.get('management') as string;
+  const today = new Date().toISOString().slice(0, 10);
+  const date = (formData.get('date') as string) || today;
 
   if (!frontend && !backend && !qa && !management) {
     return { error: 'Please fill in at least one category' };
   }
-
-  const today = new Date().toISOString().slice(0, 10);
 
   try {
     await apiFetch('/worklogs', {
       method: 'POST',
       token,
       body: JSON.stringify({
-        date: today,
+        date,
         ...(frontend ? { frontend } : {}),
         ...(backend ? { backend } : {}),
         ...(qa ? { qa } : {}),
@@ -44,5 +44,5 @@ export async function upsertWorklog(
     return { error: err instanceof Error ? err.message : 'Failed to save log' };
   }
 
-  redirect('/');
+  redirect(date === today ? '/' : '/logs');
 }

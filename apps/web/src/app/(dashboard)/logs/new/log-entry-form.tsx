@@ -2,7 +2,8 @@
 
 import { useActionState } from 'react';
 import { useRouter } from 'next/navigation';
-import { upsertWorklog, type WorkLog } from '@/app/actions/worklogs';
+import { upsertWorklog } from '@/app/actions/worklogs';
+import type { WorkLog } from '@/lib/server-data';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -14,12 +15,14 @@ const CATEGORIES = [
   { name: 'management', label: 'Management' },
 ] as const;
 
-export function LogEntryForm({ existing }: { existing: WorkLog | null }) {
+export function LogEntryForm({ existing, date }: { existing: WorkLog | null; date: string }) {
   const router = useRouter();
   const [state, action, pending] = useActionState(upsertWorklog, {});
 
   return (
     <form action={action} className="flex flex-col gap-5">
+      <input type="hidden" name="date" value={date} />
+
       <div className="rounded-xl border border-zinc-200 bg-white p-6 flex flex-col gap-5">
         {CATEGORIES.map(({ name, label }) => (
           <div key={name} className="flex flex-col gap-1.5">
@@ -42,11 +45,7 @@ export function LogEntryForm({ existing }: { existing: WorkLog | null }) {
         <Button type="submit" disabled={pending}>
           {pending ? 'Saving…' : existing ? 'Update log' : 'Save log'}
         </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => router.push('/')}
-        >
+        <Button type="button" variant="ghost" onClick={() => router.back()}>
           Cancel
         </Button>
       </div>
