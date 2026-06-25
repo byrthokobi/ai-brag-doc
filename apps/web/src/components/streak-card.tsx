@@ -28,16 +28,21 @@ function computeStreak(dates: string[]): number {
 
 export function StreakCard({ logDates }: Props) {
   const streak = computeStreak(logDates);
+  const active = streak > 0;
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6">
+    <div
+      className={`rounded-xl border p-6 ${
+        active ? 'border-amber-200 bg-amber-50' : 'border-zinc-200 bg-white'
+      }`}
+    >
       <h2 className="mb-1 font-medium text-zinc-900">Logging streak</h2>
       {streak === 0 ? (
         <p className="mt-2 text-sm text-zinc-500">Start your streak today!</p>
       ) : (
         <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-4xl font-bold text-zinc-900">{streak}</span>
-          <span className="text-sm text-zinc-500">{streak === 1 ? 'day' : 'days'} in a row</span>
+          <span className="text-4xl font-bold text-amber-500">🔥 {streak}</span>
+          <span className="text-sm text-zinc-600">{streak === 1 ? 'day' : 'days'} in a row</span>
         </div>
       )}
     </div>

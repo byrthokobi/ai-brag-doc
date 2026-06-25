@@ -46,6 +46,10 @@ export function LogEntryForm({ existing }: { existing: WorkLog | null }) {
         <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">{state.error}</p>
       )}
 
+      {saved && (
+        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">✅ Log saved successfully</p>
+      )}
+
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={pending}>
           {pending ? 'Saving…' : existing ? 'Update log' : 'Save log'}

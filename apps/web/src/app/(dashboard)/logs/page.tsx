@@ -80,26 +80,30 @@ export default async function LogsPage({ searchParams }: { searchParams: SearchP
                   day: 'numeric',
                 })}
               </p>
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-2.5">
                 {log.frontend && (
-                  <p className="text-sm text-zinc-700">
-                    <span className="font-medium text-zinc-900">Frontend:</span> {log.frontend}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <span className="inline-flex w-fit items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">Frontend</span>
+                    <p className="text-sm text-zinc-700">{log.frontend}</p>
+                  </div>
                 )}
                 {log.backend && (
-                  <p className="text-sm text-zinc-700">
-                    <span className="font-medium text-zinc-900">Backend:</span> {log.backend}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <span className="inline-flex w-fit items-center rounded-full bg-violet-50 px-2 py-0.5 text-xs font-medium text-violet-700">Backend</span>
+                    <p className="text-sm text-zinc-700">{log.backend}</p>
+                  </div>
                 )}
                 {log.qa && (
-                  <p className="text-sm text-zinc-700">
-                    <span className="font-medium text-zinc-900">QA:</span> {log.qa}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <span className="inline-flex w-fit items-center rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">QA</span>
+                    <p className="text-sm text-zinc-700">{log.qa}</p>
+                  </div>
                 )}
                 {log.management && (
-                  <p className="text-sm text-zinc-700">
-                    <span className="font-medium text-zinc-900">Management:</span> {log.management}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <span className="inline-flex w-fit items-center rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">Management</span>
+                    <p className="text-sm text-zinc-700">{log.management}</p>
+                  </div>
                 )}
               </div>
             </div>

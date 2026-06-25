@@ -66,7 +66,7 @@ export function LogFilters({ dateFrom, dateTo, category, categories }: Props) {
             id="category"
             value={cat}
             onChange={(e) => setCat(e.target.value)}
-            className="h-10 rounded-md border border-zinc-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+            className="h-10 rounded-md border border-zinc-300 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1"
           >
             <option value="">All categories</option>
             {categories.map((c) => (

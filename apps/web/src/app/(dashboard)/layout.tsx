@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { logout } from '@/app/actions/auth';
 import { Button } from '@/components/ui/button';
+import { NavLink } from '@/components/nav-link';
 import { NotificationInitializer } from '@/components/notification-initializer';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -8,22 +8,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-zinc-50">
       <header className="border-b border-zinc-200 bg-white">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-semibold text-zinc-900">
-            AI Brag Doc
-          </Link>
+          <NavLink href="/">
+            <span className="text-lg font-semibold text-zinc-900">AI Brag Doc</span>
+          </NavLink>
           <nav className="flex items-center gap-4">
-            <Link href="/logs/new" className="text-sm text-zinc-600 hover:text-zinc-900">
-              Log today
-            </Link>
-            <Link href="/logs" className="text-sm text-zinc-600 hover:text-zinc-900">
-              History
-            </Link>
-            <Link href="/summaries/weekly" className="text-sm text-zinc-600 hover:text-zinc-900">
-              Weekly
-            </Link>
-            <Link href="/summaries/monthly" className="text-sm text-zinc-600 hover:text-zinc-900">
-              Monthly
-            </Link>
+            <NavLink href="/logs/new">Log today</NavLink>
+            <NavLink href="/logs">History</NavLink>
+            <NavLink href="/summaries/weekly">Weekly</NavLink>
+            <NavLink href="/summaries/monthly">Monthly</NavLink>
             <form action={logout}>
               <Button type="submit" variant="ghost" size="sm">
                 Sign out
