@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
 
 async function getToken(): Promise<string> {
@@ -43,5 +44,5 @@ export async function upsertWorklog(
     return { error: err instanceof Error ? err.message : 'Failed to save log' };
   }
 
-  return {};
+  redirect('/');
 }
