@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { useState } from 'react';
 
 type Props = {
@@ -61,20 +62,20 @@ export function LogFilters({ dateFrom, dateTo, category, categories }: Props) {
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="category">Category</Label>
-          <select
-            id="category"
-            value={cat}
-            onChange={(e) => setCat(e.target.value)}
-            className="h-10 rounded-md border border-zinc-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
-          >
-            <option value="">All categories</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c.charAt(0).toUpperCase() + c.slice(1)}
-              </option>
-            ))}
-          </select>
+          <Label>Category</Label>
+          <Select value={cat || '__all__'} onValueChange={(val) => setCat(val === '__all__' ? '' : val)}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__all__">All categories</SelectItem>
+              {categories.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c.charAt(0).toUpperCase() + c.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex gap-2">
           <Button onClick={apply} size="sm">Apply</Button>

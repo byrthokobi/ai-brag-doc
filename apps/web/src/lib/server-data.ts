@@ -60,6 +60,17 @@ export async function fetchTodayWorklog(): Promise<WorkLog | null> {
   });
 }
 
+export async function fetchWorklogByDate(date: string): Promise<WorkLog | null> {
+  const token = await getToken();
+  return safeFetch(async () => {
+    const res = await apiFetch<WorkLogsResponse>(
+      `/worklogs?dateFrom=${date}&dateTo=${date}&limit=1`,
+      { token },
+    );
+    return res.data[0] ?? null;
+  });
+}
+
 export async function fetchWorklogs(params: {
   page?: number;
   limit?: number;
