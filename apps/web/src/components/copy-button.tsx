@@ -1,12 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
 export function CopyButton({ text }: { text: string }) {
+  const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  if (typeof navigator === 'undefined' || !navigator.clipboard) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !navigator.clipboard) return null;
 
   async function handleCopy() {
     await navigator.clipboard.writeText(text);

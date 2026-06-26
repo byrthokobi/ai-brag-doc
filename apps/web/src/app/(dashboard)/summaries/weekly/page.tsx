@@ -49,11 +49,14 @@ export default async function WeeklySummariesPage() {
                   label="Regenerate"
                 />
               </div>
-              <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-700">
-                {summary.content}
-              </p>
-              <p className="mt-4 text-xs text-zinc-400">
-                Updated {new Date(summary.updatedAt).toLocaleDateString('en-US')}
+              <div className="rounded-md bg-zinc-50 p-4">
+                <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-700">
+                  {summary.content}
+                </p>
+              </div>
+              <p className="mt-3 text-xs text-zinc-400">
+                Updated{' '}
+                {new Date(summary.updatedAt ?? summary.createdAt).toLocaleDateString('en-US')}
               </p>
             </div>
           ))}

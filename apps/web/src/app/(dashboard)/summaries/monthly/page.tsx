@@ -50,9 +50,15 @@ export default async function MonthlyDocsPage() {
                   {doc.content}
                 </p>
               </div>
-              <p className="mt-4 text-xs text-zinc-400">
-                Updated {new Date(doc.updatedAt).toLocaleDateString('en-US')}
-              </p>
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-xs text-zinc-400">
+                  {doc.content.trim().split(/\s+/).length} words
+                </p>
+                <p className="text-xs text-zinc-400">
+                  Updated{' '}
+                  {new Date(doc.updatedAt ?? doc.createdAt).toLocaleDateString('en-US')}
+                </p>
+              </div>
             </div>
           ))}
         </div>
