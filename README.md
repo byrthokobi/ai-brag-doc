@@ -25,8 +25,8 @@ Developers log their daily work across four categories — **Frontend**, **Backe
 
 1. Aggregates those logs into **AI-generated weekly summaries** every Monday at 08:00 UTC
 2. Compiles weekly summaries into a polished **monthly brag document** on the 1st of each month at 08:00 UTC
-3. Sends **daily push reminders** at 18:00 UTC to users who haven't logged yet
-4. Notifies users via **FCM push notification** if generation fails after all retries
+3. Sends **daily email reminders** at 18:00 UTC to users who haven't logged yet
+4. Notifies users via **SMTP email** if generation fails after all retries
 
 Users can also trigger or re-trigger generation manually from the web UI.
 
@@ -54,7 +54,7 @@ graph TD
         BullMQ["BullMQ Consumer\nweekly-summary · monthly-doc"]
         Cron["node-cron\nMon 08:00 · 1st 08:00 · Daily 18:00"]
         LangChain["LangChain + DeepSeek\ndeepseek-chat"]
-        FCM["Firebase Admin SDK\nFCM Push Notifications"]
+        SMTP["Nodemailer\nSMTP Email"]
     end
 
     Browser -->|"REST / JWT"| API
@@ -64,9 +64,9 @@ graph TD
     Cron -->|"enqueue"| Redis
     BullMQ --> LangChain
     LangChain -->|"upsert result"| Postgres
-    BullMQ -->|"on failure"| FCM
-    Cron -->|"daily reminder"| FCM
-    FCM -->|"push"| Browser
+    BullMQ -->|"on failure"| SMTP
+    Cron -->|"daily reminder"| SMTP
+    SMTP -->|"email"| Browser
 ```
 
 ---
@@ -81,7 +81,7 @@ graph TD
 | AI Generation | LangChain (`@langchain/openai`), DeepSeek (`deepseek-chat`) |
 | Database | PostgreSQL 18 |
 | Job Queue | Redis 7 + BullMQ |
-| Push Notifications | Firebase Cloud Messaging (FCM) via `firebase-admin` |
+| Email Notifications | Nodemailer (SMTP) |
 | Monorepo | Turborepo + npm workspaces |
 | Containerisation | Docker Compose |
 
@@ -151,7 +151,7 @@ sequenceDiagram
     participant Worker as Background Worker
     participant AI as DeepSeek (LangChain)
     participant DB as PostgreSQL
-    participant FCM as Firebase FCM
+    participant SMTP as SMTP (Nodemailer)
 
     User->>Web: Log daily work
     Web->>API: POST /worklogs
@@ -171,8 +171,8 @@ sequenceDiagram
     alt Generation succeeds
         Worker-->>Web: User refreshes to see result
     else All 3 retries exhausted
-        Worker->>FCM: Send failure push notification
-        FCM-->>User: "Generation failed" alert
+        Worker->>SMTP: Send failure email
+        SMTP-->>User: "Generation failed" email
     end
 ```
 
@@ -242,7 +242,8 @@ ai-brag-doc/
 │   │       ├── processors/           # weekly-summary, monthly-doc
 │   │       ├── cron/                 # node-cron scheduler + daily reminder
 │   │       ├── ai/ai-provider.ts     # LangChain + DeepSeek integration
-│   │       ├── notifications/        # FCM failure alert + shared send utility
+│   │       ├── email/                # Nodemailer transport + HTML templates
+│   │       ├── notifications/        # Failure alert handler
 │   │       └── prisma/               # Prisma client (shared from api/generated)
 │   │
 │   └── web/                          # Next.js 16 frontend — port 3000
@@ -341,9 +342,14 @@ REDIS_PORT=6379
 
 AI_API_KEY=your_deepseek_api_key
 
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CLIENT_EMAIL=your_client_email
-FIREBASE_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n..."
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_smtp_username
+SMTP_PASS=your_smtp_password
+SMTP_FROM="AI Brag Doc <no-reply@example.com>"
+
+WEB_URL=http://localhost:3000
 ```
 
 ### `apps/web/.env.local`
@@ -365,7 +371,7 @@ The worker is a standalone Node.js process (no HTTP server) that shares the same
 | `weekly-summary` | API enqueue or Monday cron | Fetch WorkLogs → LangChain → upsert `WeeklySummary` |
 | `monthly-doc` | API enqueue or 1st-of-month cron | Fetch WeeklySummaries + WorkLogs → LangChain → upsert `MonthlyDoc` |
 
-Both jobs retry **3 times** with **exponential backoff** (5s base). On final failure an FCM push is sent to the user.
+Both jobs retry **3 times** with **exponential backoff** (5s base). On final failure an SMTP email is sent to the user.
 
 ### Cron Schedule
 
@@ -373,4 +379,4 @@ Both jobs retry **3 times** with **exponential backoff** (5s base). On final fai
 |------|----------|--------|
 | `0 8 * * 1` | Monday 08:00 | Queue `weekly-summary` for all active users |
 | `0 8 1 * *` | 1st of month 08:00 | Queue `monthly-doc` for all active users (previous month) |
-| `0 18 * * *` | Daily 18:00 | FCM reminder to users who haven't logged today |
+| `0 18 * * *` | Daily 18:00 | Email reminder to users who haven't logged today |
